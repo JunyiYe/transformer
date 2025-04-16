@@ -40,6 +40,6 @@ class ScaledDotProductAttention(nn.Module):
         attn_weights = self.softmax(scores)
 
         # Step 4: multiply by Value
-        output = torch.matmul(attn_weights, v)
+        out = torch.matmul(attn_weights, v)
 
-        return output, attn_weights
+        return out, attn_weights
