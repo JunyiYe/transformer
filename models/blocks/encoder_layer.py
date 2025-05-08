@@ -2,24 +2,24 @@ from torch import nn
 
 from models.layers.layer_norm import LayerNorm
 from models.layers.multi_head_attention import MultiHeadAttention
-from models.layers.position_wise_feed_forward import PositionwiseFeedForward
+from models.layers.positionwise_feed_forward import PositionwiseFeedForward
 
 
 class EncoderLayer(nn.Module):
-    def __init__(self, d_model, ffn_hidden, num_heads, drop_prob):
+    def __init__(self, d_model: int, d_ff: int, num_heads: int, dropout: float = 0.1):
         super().__init__()
-        self.attention = MultiHeadAttention(d_model=d_model, num_heads=num_heads)
-        self.norm1 = LayerNorm(d_model=d_model)
-        self.dropout1 = nn.Dropout(p=drop_prob)
+        self.self_attn = MultiHeadAttention(d_model, num_heads)
+        self.norm1 = LayerNorm(d_model)
+        self.dropout1 = nn.Dropout(dropout)
 
-        self.ffn = PositionwiseFeedForward(d_model=d_model, hidden=ffn_hidden, drop_prob=drop_prob)
-        self.norm2 = LayerNorm(d_model=d_model)
-        self.dropout2 = nn.Dropout(p=drop_prob)
+        self.ffn = PositionwiseFeedForward(d_model, d_ff, dropout)
+        self.norm2 = LayerNorm(d_model)
+        self.dropout2 = nn.Dropout(dropout)
 
-    def forward(self, x, src_mask):
-        # Step 1: Compute self_attention
+    def forward(self, x, mask=None):
+        # Step 1: Compute self attention
         _x = x
-        x = self.attention(q=x, k=x, v=x, mask=src_mask)
+        x = self.attn(q=x, k=x, v=x, mask=mask)
 
         # Step 2: Addition and normalization
         x = self.dropout1(x)

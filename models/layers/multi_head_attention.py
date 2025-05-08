@@ -3,7 +3,7 @@ from models.layers.scaled_dot_product_attention import ScaledDotProductAttention
 
 
 class MultiHeadAttention(nn.Module):
-    def __init__(self, d_model, num_heads):
+    def __init__(self, d_model: int, num_heads: int):
         super(MultiHeadAttention, self).__init__()
         assert d_model % num_heads == 0, "d_model must be divisible by num_heads"
 
