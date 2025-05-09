@@ -10,16 +10,13 @@ class PositionalEncoding(nn.Module):
     Args:
         d_model (int): The dimension of the model.
         max_len (int, optional): Maximum length of the input sequence. Defaults to 5000.
-        dropout (float, optional): Dropout probability. Defaults to 0.1.
 
     Returns:
         torch.Tensor: Positional encoding matrix of shape (seq_len, d_model)
     """
 
-    def __init__(self, d_model: int, max_len: int = 5000, dropout: float = 0.1) -> None:
+    def __init__(self, d_model: int, max_len: int = 5000) -> None:
         super(PositionalEncoding, self).__init__()
-
-        self.dropout = nn.Dropout(p=dropout)
 
         # Create a long enough P matrix
         pe = torch.zeros(max_len, d_model)
@@ -45,4 +42,4 @@ class PositionalEncoding(nn.Module):
         # pe automatically broadcasts to (batch_size, x's seq_len, d_model)
         x = x + self.pe[:, x.size(1), :] 
 
-        return self.dropout(x)
+        return x
