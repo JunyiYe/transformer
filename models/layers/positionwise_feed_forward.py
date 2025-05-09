@@ -14,15 +14,15 @@ class PositionwiseFeedForward(nn.Module):
     Implements FFN (Feed Forward Network) in the Transformer model.
     
     Args:
-        d_model (int): The number of expected features in the input (input dimension).
-        d_ff (int): The number of features in the feedforward network (hidden dimension).
-        dropout (float, optional): Dropout probability. Default is 0.1.
+        d_model: The number of expected features in the input (input dimension).
+        d_ff: The number of features in the feedforward network (hidden dimension).
+        dropout: Dropout probability. Default is 0.1.
     """
     def __init__(self, d_model: int, d_ff: int, dropout: float = 0.1):
         super(PositionwiseFeedForward, self).__init__()
         self.linear1 = nn.Linear(d_model, d_ff)
-        self.relu = nn.ReLU() # Can also use nn.GELU() or other activation functions
         self.linear2 = nn.Linear(d_ff, d_model)
+        self.relu = nn.ReLU() # Can also use nn.GELU() or other activation functions
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
