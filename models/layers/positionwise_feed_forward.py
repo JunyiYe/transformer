@@ -1,11 +1,3 @@
-"""
-"Positional or Positionwise" does not mean that it uses positional embeddings 
-or positional encodings as inputs (though those are added elsewhere in the Transformer).
-
-Instead, it means that for a sequence of tokens, each token's embedding (at each position) 
-is processed through the same feedforward network, independently.
-"""
-
 from torch import nn
 
 
@@ -33,5 +25,5 @@ class PositionwiseFeedForward(nn.Module):
         x = self.relu(x)
         x = self.dropout(x)
         x = self.linear2(x)
-        
+
         return x

@@ -1,3 +1,4 @@
+import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -33,7 +34,7 @@ class ScaledDotProductAttention(nn.Module):
         d_k = K.size(-1)
 
         # Step 1: Scaled dot-product
-        scores = torch.matmul(Q, K.transpose(-2,-1)) / torch.sqrt(torch.tensor(d_k, dtype=torch.float32))
+        scores = torch.matmul(Q, K.transpose(-2,-1)) / math.sqrt(d_k)
 
         # Step 2: Apply mask (optionaly)
         if mask is not None:
