@@ -30,5 +30,5 @@ class TokenEmbedding(nn.Module):
         Returns:
             torch.Tensor: Output tensor of shape (batch_size, seq_len, d_model).
         """
-
+        # Scale the embeddings by the square root of d_model
         return self.embedding(x) * math.sqrt(self.d_model)
