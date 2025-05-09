@@ -17,6 +17,9 @@ class PositionwiseFeedForward(nn.Module):
         d_model: The number of expected features in the input (input dimension).
         d_ff: The number of features in the feedforward network (hidden dimension).
         dropout: Dropout probability. Default is 0.1.
+
+    Output:
+        x: Output tensor of shape (batch_size, seq_len, d_model).
     """
     def __init__(self, d_model: int, d_ff: int, dropout: float = 0.1):
         super(PositionwiseFeedForward, self).__init__()
@@ -30,4 +33,5 @@ class PositionwiseFeedForward(nn.Module):
         x = self.relu(x)
         x = self.dropout(x)
         x = self.linear2(x)
+        
         return x

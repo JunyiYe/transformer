@@ -1,6 +1,5 @@
-from torch import nn
+import torch.nn as nn
 
-from models.layers.layer_norm import LayerNorm
 from models.layers.multi_head_attention import MultiHeadAttention
 from models.layers.positionwise_feed_forward import PositionwiseFeedForward
 
@@ -18,7 +17,7 @@ class DecoderLayer(nn.Module):
         """
         super().__init__()
         self.self_attn = MultiHeadAttention(d_model, num_heads)
-        self.norm1 = LayerNorm(d_model)
+        self.norm1 = nn.LayerNorm(d_model)
         self.dropout1 = nn.Dropout(p=dropout)
 
         self.enc_dec_attention = MultiHeadAttention(d_model, num_heads)

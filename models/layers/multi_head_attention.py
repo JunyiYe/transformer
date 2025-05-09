@@ -66,6 +66,7 @@ class MultiHeadAttention(nn.Module):
         batch_size, seq_len, _ = tensor.size()
         # PyTorch requires the tensor to be contiguous in memory before reshaping (view operation)
         tensor = tensor.view(batch_size, seq_len, self.num_heads, self.head_dim).transpse(1, 2)
+        
         return tensor
     
     def concat(self, tensor):
@@ -80,4 +81,5 @@ class MultiHeadAttention(nn.Module):
         """
         batch_size, _, seq_len, _ = tensor.size()
         tensor = tensor.transpose(1, 2).contiguous().view(batch_size, seq_len, self.d_model)
+        
         return tensor
