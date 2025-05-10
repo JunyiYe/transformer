@@ -20,7 +20,7 @@ class TokenEmbedding(nn.Module):
         super(TokenEmbedding, self).__init__()
 
         self.d_model = d_model
-        self.embedding = nn.Embedding(vocab_size, d_model, padding_idx=padding_idx)
+        self.embedding = nn.Embedding(vocab_size, d_model, padding_idx)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """

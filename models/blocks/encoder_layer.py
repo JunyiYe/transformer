@@ -30,17 +30,19 @@ class EncoderLayer(nn.Module):
         self.dropout2 = nn.Dropout(dropout)
 
     def forward(self, x, src_mask=None):
-        # Step 1: self-attention
+        """
+        Forward pass for the encoder layer.
+        Args:
+            x (Tensor): Input tensor of shape (batch_size, seq_len, d_model).
+            src_mask (Tensor, optional): Source mask tensor of shape (batch_size, 1, 1, seq_len).
+        """
+        # 1. Self-attention
         self_attn_output, _ = self.attn(Q=x, K=x, V=x, mask=src_mask)
-
-        # Step 2: Residual connection and LayerNorm
         x = x + self.dropout1(self_attn_output)
         x = self.norm1(x)
 
-        # Step 3: Positionwise feed forward network
+        # 2. Feedforward network
         ffn_output = self.ffn(x)
-
-        # Step 4: Addition and normalization
         x = x + self.dropout2(ffn_output)
         x = self.norm2(x)
 

@@ -9,8 +9,15 @@ class Transformer(nn.Module):
     Transformer model that combines both encoder and decoder.
 
     Args:
-        encoder (nn.Module): The encoder module.
-        decoder (nn.Module): The decoder module.
+        src_vocab_size (int): Size of the source vocabulary.
+        tgt_vocab_size (int): Size of the target vocabulary.
+        d_model (int): Dimension of the model (input and output).
+        num_heads (int): Number of attention heads.
+        d_ffn (int): Dimension of the feedforward network.
+        num_layers (int): Number of encoder and decoder layers.
+        max_len (int, optional): Maximum length of the input sequence. Default is 5000.
+        padding_idx (int, optional): Padding index for the input sequences. Default is 0.
+        dropout (float, optional): Dropout probability. Default is 0.1.
     """
 
     def __init__(self, src_vocab_size: int, tgt_vocab_size: int, d_model: int, num_heads: int, d_ffn: int,
