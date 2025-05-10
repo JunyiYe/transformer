@@ -15,14 +15,18 @@ class TransformerEncoder(nn.Module):
         num_layers (int): Number of encoder layers.
         dropout (float, optional): Dropout probability. Default is 0.1.
     """
-    def __init__(self, d_model: int, num_heads: int, d_ffn: int, num_layers: int, dropout=0.1):
+    def __init__(self, vocab_size: int, d_model: int, num_heads: int, d_ffn: int, 
+                 num_layers: int, max_len: int = 5000, padding_idx: int = 0, 
+                 dropout: float = 0.1):
         super(TransformerEncoder, self).__init__()
 
-        self.embedding = TransformerEmbedding(d_model, d_model, dropout=dropout)
+        self.embedding = TransformerEmbedding(vocab_size, d_model, max_len, padding_idx, dropout)
 
         self.layers = nn.ModuleList([
             EncoderLayer(d_model, num_heads, d_ffn, dropout) for _ in range(num_layers)
         ])
+
+        self.norm = nn.LayerNorm(d_model)
 
     def forward(self, src, src_mask=None):
         """
@@ -35,4 +39,4 @@ class TransformerEncoder(nn.Module):
         for layer in self.layers:
             x = layer(x, src_mask)
 
-        return x
+        return self.norm(x) # Layer normalization is recommended in practice
