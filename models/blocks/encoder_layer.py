@@ -17,11 +17,11 @@ class EncoderLayer(nn.Module):
     Output:
         x (Tensor): Output tensor of shape (batch_size, seq_len, d_model).
     """
-    def __init__(self, d_model: int, num_heads: int, d_ff: int, dropout: float = 0.1):
+    def __init__(self, d_model: int, num_heads: int, d_ffn: int, dropout: float = 0.1):
         super(EncoderLayer, self).__init__()
 
         self.self_attn = MultiHeadAttention(d_model, num_heads)
-        self.ffn = PositionwiseFeedForward(d_model, d_ff, dropout)
+        self.ffn = PositionwiseFeedForward(d_model, d_ffn, dropout)
 
         self.norm1 = nn.LayerNorm(d_model)
         self.norm2 = nn.LayerNorm(d_model)
@@ -29,12 +29,12 @@ class EncoderLayer(nn.Module):
         self.dropout1 = nn.Dropout(dropout)
         self.dropout2 = nn.Dropout(dropout)
 
-    def forward(self, x, mask=None):
-        # Step 1: Compute self-attention
-        attn_output, _ = self.attn(Q=x, K=x, V=x, mask=mask)
+    def forward(self, x, src_mask=None):
+        # Step 1: self-attention
+        self_attn_output, _ = self.attn(Q=x, K=x, V=x, mask=src_mask)
 
         # Step 2: Residual connection and LayerNorm
-        x = x + self.dropout1(attn_output)
+        x = x + self.dropout1(self_attn_output)
         x = self.norm1(x)
 
         # Step 3: Positionwise feed forward network
