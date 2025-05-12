@@ -48,10 +48,7 @@ criterion = nn.CrossEntropyLoss(ignore_index=trg_pad_idx)
 def train(model, iterator, optimizer, criterion, clip):
     model.train()
     epoch_loss = 0
-    for i, batch in enumerate(iterator):
-        src = batch.src
-        trg = batch.trg
-
+    for i, (src, trg) in enumerate(iterator):
         optimizer.zero_grad()
         output = model(src, trg[:, :-1])
         output_reshape = output.contiguous().view(-1, output.shape[-1])
@@ -73,9 +70,7 @@ def evaluate(model, iterator, criterion):
     epoch_loss = 0
     batch_bleu = []
     with torch.no_grad():
-        for i, batch in enumerate(iterator):
-            src = batch.src
-            trg = batch.trg
+        for i, (src, trg) in enumerate(iterator):
             output = model(src, trg[:, :-1])
             output_reshape = output.contiguous().view(-1, output.shape[-1])
             trg = trg[:, 1:].contiguous().view(-1)
