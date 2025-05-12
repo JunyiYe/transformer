@@ -20,7 +20,7 @@ class Transformer(nn.Module):
         dropout (float, optional): Dropout probability. Default is 0.1.
     """
 
-    def __init__(self, src_pad_idx, trg_pad_idx, trg_sos_idx， src_vocab_size: int, tgt_vocab_size: int, 
+    def __init__(self, src_pad_idx, trg_pad_idx, trg_sos_idx, src_vocab_size: int, tgt_vocab_size: int, 
                  d_model: int, num_heads: int, d_ffn: int, num_layers: int, max_len: int = 5000, 
                  padding_idx: int = 0, dropout: float = 0.1):
         super(Transformer, self).__init__()
