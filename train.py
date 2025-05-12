@@ -22,15 +22,14 @@ def initialize_weights(m):
 model = Transformer(src_pad_idx=src_pad_idx,
                     trg_pad_idx=trg_pad_idx,
                     trg_sos_idx=trg_sos_idx,
+                    src_vocab_size=enc_voc_size,
+                    tgt_vocab_size=dec_voc_size,
                     d_model=d_model,
-                    enc_voc_size=enc_voc_size,
-                    dec_voc_size=dec_voc_size,
+                    num_heads=num_heads,
+                    d_ffn=d_ffn,
+                    num_layers=num_layers,
                     max_len=max_len,
-                    ffn_hidden=ffn_hidden,
-                    n_head=n_heads,
-                    n_layers=n_layers,
-                    drop_prob=drop_prob,
-                    device=device).to(device)
+                    dropout=dropout).to(device)
 
 print(f'The model has {count_parameters(model):,} trainable parameters')
 model.apply(initialize_weights)
