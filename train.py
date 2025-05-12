@@ -16,7 +16,7 @@ def count_parameters(model):
 
 def initialize_weights(m):
     if hasattr(m, 'weight') and m.weight.dim() > 1:
-        nn.init.kaiming_uniform(m.weight.data)
+        nn.init.kaiming_uniform_(m.weight.data)
 
 
 model = Transformer(src_pad_idx=src_pad_idx,
@@ -39,11 +39,10 @@ optimizer = Adam(params=model.parameters(),
                  eps=adam_eps)
 
 scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer=optimizer,
-                                                 verbose=True,
                                                  factor=factor,
                                                  patience=patience)
 
-criterion = nn.CrossEntropyLoss(ignore_index=src_pad_idx)
+criterion = nn.CrossEntropyLoss(ignore_index=trg_pad_idx)
 
 
 def train(model, iterator, optimizer, criterion, clip):
