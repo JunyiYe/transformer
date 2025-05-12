@@ -19,7 +19,7 @@ class TransformerEmbedding(nn.Module):
         super(TransformerEmbedding, self).__init__()
 
         self.token_embedding = TokenEmbedding(vocab_size, d_model, padding_idx)
-        self.positional_encoding = PositionalEncoding(d_model, max_len, dropout)
+        self.positional_encoding = PositionalEncoding(d_model, max_len)
 
         self.droupout = nn.Dropout(dropout)
 
