@@ -92,7 +92,7 @@ def get_bleu(hypotheses: list[list[str]], reference: list[list[str]]) -> float:
 
     return 100.0 * bleu(stats.tolist())
 
-def idx_to_word(x: List[int], vocab) -> str:
+def idx_to_word(x: list[int], vocab) -> str:
     """
     Convert a list of token indices to a readable string using vocabulary mapping.
 
